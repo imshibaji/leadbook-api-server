@@ -1,0 +1,24 @@
+type Business {
+  # Example field (placeholder)
+  exampleField: Int
+}
+
+input CreateBusinessInput {
+  # Example field (placeholder)
+  exampleField: Int
+}
+
+input UpdateBusinessInput {
+  id: Int!
+}
+
+type Query {
+  business: [Business]!
+  business(id: Int!): Business
+}
+
+type Mutation {
+  createBusiness(createBusinessInput: BusinessDto!): Business!
+  updateBusiness(updateBusinessInput: BusinessDto!): Business!
+  removeBusiness(id: Int!): Business
+}
