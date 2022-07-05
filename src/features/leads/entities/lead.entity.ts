@@ -8,22 +8,22 @@ export class Lead {
     @PrimaryGeneratedColumn()
     id:number;
 
-    @Column()
+    @Column({default: null})
     uid?:string;
 
-    @Column()
+    @Column({default: null})
     purpose?:string;
 
     @Column()
     name: String;
 
-    @Column()
-    email:string;
+    @Column({default: null})
+    email?:string;
 
     @Column()
     mobile: string;
 
-    @Column()
+    @Column({default: null})
     altMobile?:string;
 
     @Column()

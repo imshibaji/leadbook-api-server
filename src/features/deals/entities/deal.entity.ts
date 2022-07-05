@@ -6,7 +6,7 @@ export class Deal {
     @PrimaryGeneratedColumn()
     id:number;
 
-    @Column()
+    @Column({default: null})
     uid?: string;
 
     @Column()
@@ -27,9 +27,9 @@ export class Deal {
     @CreateDateColumn()
     createdAt: Date;
 
-    @Column()
+    @Column({default: null})
     leadUid?: string;
 
     @ManyToOne(()=>Lead, lead => lead.deals)
-    lead?: Lead;
+    lead: Lead;
 }

@@ -8,7 +8,7 @@ export class Payment {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
+    @Column({default: null})
     uid?:string;
 
     @Column()
@@ -23,18 +23,18 @@ export class Payment {
     @CreateDateColumn()
     createdAt:Date;
 
-    @Column()
+    @Column({default: null})
     leadUid?: string;
 
-    @Column()
+    @Column({default: null})
     dealUid?: string;
 
     @OneToOne(()=> Lead)
-    lead:Lead;
+    lead?:Lead;
 
     @OneToOne(()=> Deal)
-    deal:Deal;
+    deal?:Deal;
 
-    @ManyToOne(()=>Business)
-    business: Business;
+    @ManyToOne(()=>Business, business => business.payments)
+    business?: Business;
 }

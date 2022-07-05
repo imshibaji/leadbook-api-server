@@ -6,7 +6,7 @@ export class Followup {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
+    @Column({default: null})
     uid?: string;
 
     @Column()
@@ -18,7 +18,7 @@ export class Followup {
     @Column()
     schedule: Date;
 
-    @Column()
+    @Column({default: null})
     leadUid?: string;
 
     @Column()

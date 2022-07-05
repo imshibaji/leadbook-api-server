@@ -17,7 +17,7 @@ export class AuthService {
         try {
             const user = await this.usersService.findByEmail(email);
             if (user != null && bcrypt.compareSync(pass, user.password)) {
-                const { password, ...result } = user;
+                const { password, businesses, ...result } = user;
                 return result;
             }
             return null;
