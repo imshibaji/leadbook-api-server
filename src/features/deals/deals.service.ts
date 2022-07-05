@@ -1,25 +1,32 @@
-import { Injectable } from '@nestjs/common';
+import { Deal } from './entities/deal.entity';
+import { Repository } from 'typeorm';
+import { Inject, Injectable } from '@nestjs/common';
 import { DealDto } from './dto/deal.dto';
 
 @Injectable()
 export class DealsService {
+  constructor(
+    @Inject('DEAL_REPOSITORY')
+    private dealRepository: Repository<Deal>
+  ){}
+
   create(dealDto: DealDto) {
-    return 'This action adds a new deal';
+    return this.dealRepository.create(dealDto);
   }
 
   findAll() {
-    return `This action returns all deals`;
+    return this.dealRepository.find();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} deal`;
+    return this.dealRepository.findOne({where: {id}});
   }
 
   update(id: number, dealDto: DealDto) {
-    return `This action updates a #${id} deal`;
+    return this.dealRepository.update(id, dealDto);
   }
 
   remove(id: number) {
-    return `This action removes a #${id} deal`;
+    return this.dealRepository.delete(id);
   }
 }

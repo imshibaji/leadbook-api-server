@@ -1,3 +1,5 @@
+import { DealsModule } from './../deals/deals.module';
+import { FollowupsModule } from './../followups/followups.module';
 import { BusinessModule } from './../business/business.module';
 import { NestjsFormDataModule } from 'nestjs-form-data';
 import { DatabaseModule } from './../../database/database.module';
@@ -7,7 +9,13 @@ import { LeadsController } from './leads.controller';
 import { leadProviders } from './entities/lead.provider';
 
 @Module({
-  imports: [DatabaseModule, NestjsFormDataModule, BusinessModule],
+  imports: [
+    DatabaseModule,
+    NestjsFormDataModule,
+    BusinessModule,
+    FollowupsModule,
+    DealsModule
+  ],
   controllers: [LeadsController],
   providers: [
     ...leadProviders,

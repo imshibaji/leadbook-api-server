@@ -1,25 +1,32 @@
-import { Injectable } from '@nestjs/common';
+import { Repository } from 'typeorm';
+import { Inject, Injectable } from '@nestjs/common';
 import { FollowupDto } from './dto/followup.dto';
+import { Followup } from './entities/followup.entity';
 
 @Injectable()
 export class FollowupsService {
+  constructor(
+    @Inject('FOLLOWUP_REPOSITORY')
+    private followupRepository: Repository<Followup>
+  ){}
+
   create(followupDto: FollowupDto) {
-    return 'This action adds a new followup';
+    return this.followupRepository.create(followupDto);
   }
 
   findAll() {
-    return `This action returns all followups`;
+    return this.followupRepository.find();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} followup`;
+    return this.followupRepository.findOne({where:{id}});
   }
 
   update(id: number, followupDto: FollowupDto) {
-    return `This action updates a #${id} followup`;
+    return this.followupRepository.update(id, followupDto);
   }
 
   remove(id: number) {
-    return `This action removes a #${id} followup`;
+    return this.followupRepository.delete(id);
   }
 }

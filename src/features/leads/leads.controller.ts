@@ -1,3 +1,5 @@
+import { DealsService } from './../deals/deals.service';
+import { FollowupsService } from './../followups/followups.service';
 import { BusinessService } from './../business/business.service';
 import { Controller, Get, Post, Body, Patch, Param, Delete, Put } from '@nestjs/common';
 import { LeadsService } from './leads.service';
@@ -10,6 +12,8 @@ export class LeadsController {
   constructor(
       private readonly leadsService: LeadsService,
       private readonly businessService: BusinessService,
+      private readonly followupsService: FollowupsService,
+      private readonly dealsService: DealsService
   ) {}
 
   @Post()
@@ -61,49 +65,49 @@ export class LeadsController {
     }
   }
 
-  @Put('followup-add/:lid/:bid')
-  async addFollowup(@Param('lid') lid: number, @Param('bid') bid: number){
+  @Put('followup-add/:lid/:fid')
+  async addFollowup(@Param('lid') lid: number, @Param('fid') fid: number){
     const lead = await this.leadsService.findOne(lid);
-    const business = await this.businessService.findOne(bid);
-    const check = await this.leadsService.addRelativeBusiness(lead, business);
+    const followup = await this.followupsService.findOne(fid);
+    const check = await this.leadsService.addRelativeFollowup(lead, followup);
     if(check == null){
-      return {message: 'Lead connected with Business'};
+      return {message: 'Lead connected with Followup'};
     }else{
       return check;
     }
   }
 
-  @Delete('followup-remove/:lid/:bid')
-  async removeFollowup(@Param('lid') lid: number, @Param('bid') bid: number){
+  @Delete('followup-remove/:lid/:fid')
+  async removeFollowup(@Param('lid') lid: number, @Param('fid') fid: number){
     const lead = await this.leadsService.findOne(lid);
-    const business = await this.businessService.findOne(bid);
-    const check = await this.leadsService.removeRelativeBusiness(lead, business);
+    const followup = await this.followupsService.findOne(fid);
+    const check = await this.leadsService.removeRelativeFollowup(lead, followup);
     if(check == null){
-      return {message: 'Lead disconnected with Business'};
+      return {message: 'Lead disconnected with Followup'};
     }else{
       return check;
     }
   }
 
-  @Put('deal-add/:lid/:bid')
-  async addDeal(@Param('lid') lid: number, @Param('bid') bid: number){
+  @Put('deal-add/:lid/:did')
+  async addDeal(@Param('lid') lid: number, @Param('did') did: number){
     const lead = await this.leadsService.findOne(lid);
-    const business = await this.businessService.findOne(bid);
-    const check = await this.leadsService.addRelativeBusiness(lead, business);
+    const deal = await this.dealsService.findOne(did);
+    const check = await this.leadsService.addRelativeDeal(lead, deal);
     if(check == null){
-      return {message: 'Lead connected with Business'};
+      return {message: 'Lead connected with Deal'};
     }else{
       return check;
     }
   }
 
-  @Delete('deal-remove/:lid/:bid')
-  async removeDeal(@Param('lid') lid: number, @Param('bid') bid: number){
+  @Delete('deal-remove/:lid/:did')
+  async removeDeal(@Param('lid') lid: number, @Param('did') did: number){
     const lead = await this.leadsService.findOne(lid);
-    const business = await this.businessService.findOne(bid);
-    const check = await this.leadsService.removeRelativeBusiness(lead, business);
+    const deal = await this.dealsService.findOne(did);
+    const check = await this.leadsService.removeRelativeDeal(lead, deal);
     if(check == null){
-      return {message: 'Lead disconnected with Business'};
+      return {message: 'Lead disconnected with Deal'};
     }else{
       return check;
     }
