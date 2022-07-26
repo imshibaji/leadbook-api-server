@@ -11,9 +11,12 @@ import { LeadsModule } from './features/leads/leads.module';
 import { FollowupsModule } from './features/followups/followups.module';
 import { DealsModule } from './features/deals/deals.module';
 import { PaymentsModule } from './features/payments/payments.module';
+import { OrdersModule } from './features/orders/orders.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot(),
     DatabaseModule, 
     UsersModule, 
     BusinessModule, 
@@ -22,7 +25,7 @@ import { PaymentsModule } from './features/payments/payments.module';
     LeadsModule, 
     FollowupsModule, 
     DealsModule, 
-    PaymentsModule
+    PaymentsModule, OrdersModule,
   ],
   controllers: [AppController],
   providers: [AppService,],

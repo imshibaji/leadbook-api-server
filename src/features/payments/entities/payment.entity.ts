@@ -1,7 +1,7 @@
 import { Business } from './../../business/entities/business.entity';
 import { Lead } from './../../leads/entities/lead.entity';
 import { Deal } from './../../deals/entities/deal.entity';
-import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Payment {
@@ -17,6 +17,9 @@ export class Payment {
     @Column({default:0})
     amount: number;
 
+    @Column({default:0})
+    discount: number;
+
     @Column()
     type: string;
 
@@ -29,11 +32,13 @@ export class Payment {
     @Column({default: null})
     dealUid?: string;
 
-    @OneToOne(()=> Lead)
-    lead?:Lead;
+    @OneToOne(()=> Lead, lead => lead.id)
+    @JoinColumn()
+    lead:Lead;
 
-    @OneToOne(()=> Deal)
-    deal?:Deal;
+    @OneToOne(()=> Deal, deal => deal.id)
+    @JoinColumn()
+    deal:Deal;
 
     @ManyToOne(()=>Business, business => business.payments)
     business?: Business;

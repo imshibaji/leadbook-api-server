@@ -1,3 +1,4 @@
+import { LeadsModule } from './../leads/leads.module';
 import { NestjsFormDataModule } from 'nestjs-form-data';
 import { DatabaseModule } from './../../database/database.module';
 import { Module } from '@nestjs/common';
@@ -6,7 +7,7 @@ import { DealsController } from './deals.controller';
 import { dealProviders } from './entities/deal.provider';
 
 @Module({
-  imports: [DatabaseModule, NestjsFormDataModule,],
+  imports: [DatabaseModule, NestjsFormDataModule, LeadsModule],
   controllers: [DealsController],
   providers: [
     ...dealProviders,

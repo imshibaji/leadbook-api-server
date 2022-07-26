@@ -1,3 +1,4 @@
+import { Lead } from './../leads/entities/lead.entity';
 import { Deal } from './entities/deal.entity';
 import { Repository } from 'typeorm';
 import { Inject, Injectable } from '@nestjs/common';
@@ -11,22 +12,62 @@ export class DealsService {
   ){}
 
   create(dealDto: DealDto) {
-    return this.dealRepository.create(dealDto);
+    try {
+      const deal = this.dealRepository.create(dealDto);
+      return this.dealRepository.save(deal);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   findAll() {
-    return this.dealRepository.find();
+    try {
+      return this.dealRepository.find({
+        relations: ['lead']
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   findOne(id: number) {
-    return this.dealRepository.findOne({where: {id}});
+    try {
+      return this.dealRepository.findOne({where: {id: id}, relations:['lead']});
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   update(id: number, dealDto: DealDto) {
-    return this.dealRepository.update(id, dealDto);
+    try {
+      return this.dealRepository.update(id, dealDto);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   remove(id: number) {
-    return this.dealRepository.delete(id);
+    try {
+      return this.dealRepository.delete(id);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  // Lead
+  async addRelativeLead(deal: Deal, lead: Lead){
+    try {
+      await this.dealRepository.createQueryBuilder().relation(Deal, 'lead').of(deal).set(lead);
+    } catch (error) {
+      return error;
+    }
+  }
+
+  async removeRelativeLead(deal: Deal, lead: Lead){
+    try {
+      await this.dealRepository.createQueryBuilder().relation(Deal, 'lead').of(deal).set(null);
+    } catch (error) {
+      return error;
+    }
   }
 }

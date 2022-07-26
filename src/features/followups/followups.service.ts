@@ -1,3 +1,4 @@
+import { Lead } from './../leads/entities/lead.entity';
 import { Repository } from 'typeorm';
 import { Inject, Injectable } from '@nestjs/common';
 import { FollowupDto } from './dto/followup.dto';
@@ -11,22 +12,65 @@ export class FollowupsService {
   ){}
 
   create(followupDto: FollowupDto) {
-    return this.followupRepository.create(followupDto);
+    try {
+      const followup = this.followupRepository.create(followupDto);
+      return this.followupRepository.save(followup);
+    } catch (error) {
+      return error;
+    }
   }
 
   findAll() {
-    return this.followupRepository.find();
+    try {
+      return this.followupRepository.find({
+        relations:['lead']
+      });
+    } catch (error) {
+      return error;
+    }
+    
   }
 
   findOne(id: number) {
-    return this.followupRepository.findOne({where:{id}});
+    try {
+      return this.followupRepository.findOne({where:{id}});
+    } catch (error) {
+      return error;
+    }
   }
 
   update(id: number, followupDto: FollowupDto) {
-    return this.followupRepository.update(id, followupDto);
+    try {
+      return this.followupRepository.update(id, followupDto);
+    } catch (error) {
+      return error;
+    }
   }
 
   remove(id: number) {
-    return this.followupRepository.delete(id);
+    try {
+      return this.followupRepository.delete(id);
+    } catch (error) {
+      return error;
+    }
+  }
+
+  // Relations
+  async addRelativeLead(followup:Followup, lead: Lead){
+    try {
+      await this.followupRepository.createQueryBuilder().relation(Followup, 'lead').of(followup).set(lead);
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
+  }
+
+  async removeRelativeLead(followup:Followup, lead: Lead){
+    try {
+      await this.followupRepository.createQueryBuilder().relation(Followup,'lead').of(followup).set(null);
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
   }
 }

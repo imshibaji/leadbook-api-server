@@ -33,11 +33,12 @@ export class Lead {
     status: string;
 
     @ManyToMany(()=>Business, business => business.leads)
+    @JoinTable()
     businesses?: Business[]
 
-    @OneToMany(()=>Followup, followup => followup.lead)
+    @OneToMany(()=>Followup, followup => followup.lead, { eager: true })
     followups?: Followup[]
 
-    @OneToMany(()=>Deal, deal => deal.lead)
+    @OneToMany(()=>Deal, deal => deal.lead, { eager: true })
     deals?: Deal[]
 }

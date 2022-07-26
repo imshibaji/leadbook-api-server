@@ -5,6 +5,11 @@
   "author": "Shibaji Debnath",
   "private": true,
   "license": "UNLICENSED",
+  "bin": "dist/main.js",
+  "pkg": {
+    "scripts": "dist/**/*.js",
+    "assets": ["views/**/*", "public/**/*"]
+  },
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
@@ -18,11 +23,13 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "pkg": "pkg . -o api_app --compress GZip"
   },
   "dependencies": {
     "@nestjs/apollo": "^10.0.16",
     "@nestjs/common": "^8.0.0",
+    "@nestjs/config": "^2.2.0",
     "@nestjs/core": "^8.0.0",
     "@nestjs/graphql": "^10.0.16",
     "@nestjs/jwt": "^8.0.1",
@@ -65,6 +72,7 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
     "jest": "28.0.3",
+    "pkg": "^5.8.0",
     "prettier": "^2.3.2",
     "source-map-support": "^0.5.20",
     "supertest": "^6.1.3",

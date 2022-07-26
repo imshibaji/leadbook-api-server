@@ -1,5 +1,3 @@
-import { Deal } from './../deals/entities/deal.entity';
-import { Followup } from './../followups/entities/followup.entity';
 import { Business } from './../business/entities/business.entity';
 import { Repository } from 'typeorm';
 import { Inject, Injectable } from '@nestjs/common';
@@ -32,7 +30,7 @@ export class LeadsService {
         ]
       });
     } catch (error) {
-      return error;
+      console.log(error);
     }
   }
 
@@ -47,7 +45,7 @@ export class LeadsService {
         ]
       })
     } catch (error) {
-      return error;
+      console.log(error);
     }
   }
 
@@ -55,7 +53,8 @@ export class LeadsService {
     try {
       return await this.leadRepository.update(id, leadDto);
     } catch (error) {
-      return error;
+      console.log(error);
+      
     }
   }
 
@@ -63,7 +62,7 @@ export class LeadsService {
     try {
       return await this.leadRepository.delete(id);
     } catch (error) {
-      return error;
+      console.log(error);
     }
   }
 
@@ -85,54 +84,6 @@ export class LeadsService {
   async removeRelativeBusiness(lead: Lead, business: Business){
     try {
       await this.leadRepository.createQueryBuilder().relation(Lead, 'businesses').of(lead).remove(business);
-    } catch (error) {
-      return error;
-    }
-  }
-
-  // Followup 
-  async addRelativeFollowup(lead: Lead, followup: Followup){
-    try {
-      await this.leadRepository.createQueryBuilder().relation(Lead, 'followups').of(lead).add(followup);
-    } catch (error) {
-      return error;
-    }
-  }
-  async switchRelativeFollowup(lead: Lead, newFollowup: Followup, oldFollowup: Followup){
-    try {
-      await this.leadRepository.createQueryBuilder().relation(Lead, 'followups').of(lead).addAndRemove(newFollowup, oldFollowup);
-    } catch (error) {
-      return error;
-    }
-  }
-  async removeRelativeFollowup(lead: Lead, followup: Followup){
-    try {
-      await this.leadRepository.createQueryBuilder().relation(Lead, 'followups').of(lead).remove(followup);
-    } catch (error) {
-      return error;
-    }
-  }
-
-  // Deal
-  async addRelativeDeal(lead: Lead, deal: Deal){
-    try {
-      await this.leadRepository.createQueryBuilder().relation(Lead, 'deals').of(lead).add(deal);
-    } catch (error) {
-      return error;
-    }
-  }
-
-  async switchRelativeDeal(lead: Lead, newDeal: Deal, oldDeal: Deal){
-    try {
-      await this.leadRepository.createQueryBuilder().relation(Lead, 'deals').of(lead).addAndRemove(newDeal, oldDeal);
-    } catch (error) {
-      return error;
-    }
-  }
-
-  async removeRelativeDeal(lead: Lead, deal: Deal){
-    try {
-      await this.leadRepository.createQueryBuilder().relation(Lead, 'deals').of(lead).remove(deal);
     } catch (error) {
       return error;
     }

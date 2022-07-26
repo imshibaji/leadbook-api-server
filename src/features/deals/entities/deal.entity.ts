@@ -1,5 +1,6 @@
 import { Lead } from './../../leads/entities/lead.entity';
-import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, JoinTable, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Order } from 'src/features/orders/entities/order.entity';
 
 @Entity()
 export class Deal {
@@ -24,7 +25,7 @@ export class Deal {
     @Column()
     status: string;
 
-    @CreateDateColumn()
+    @Column({default: ()=> 'CURRENT_TIMESTAMP', type: 'timestamp'})
     createdAt: Date;
 
     @Column({default: null})
@@ -32,4 +33,7 @@ export class Deal {
 
     @ManyToOne(()=>Lead, lead => lead.deals)
     lead: Lead;
+
+    @OneToMany(()=> Order, order => order.deal, { eager: true })
+    orders: Order[];
 }

@@ -19,6 +19,7 @@ async function bootstrap() {
   app.useStaticAssets(join(__dirname, '..', 'public'));
   app.setBaseViewsDir(join(__dirname, '..', 'views'));
   app.setViewEngine('pug');
+  app.useStaticAssets('.'); //Use for SwaggerModule 
 
   const config = new DocumentBuilder()
     .setTitle('LeadBook APP APIs')
@@ -38,6 +39,8 @@ async function bootstrap() {
   app.use(helmet({
     contentSecurityPolicy: false,
   }));
-  await app.listen(1337);
+  await app.listen(process.env.PORT, process.env.HOST, ()=>{
+    console.log('Server: http://'+process.env.HOST+':'+process.env.PORT);
+  });
 }
 bootstrap();

@@ -1,5 +1,3 @@
-import { DealsModule } from './../deals/deals.module';
-import { FollowupsModule } from './../followups/followups.module';
 import { BusinessModule } from './../business/business.module';
 import { NestjsFormDataModule } from 'nestjs-form-data';
 import { DatabaseModule } from './../../database/database.module';
@@ -13,8 +11,6 @@ import { leadProviders } from './entities/lead.provider';
     DatabaseModule,
     NestjsFormDataModule,
     BusinessModule,
-    FollowupsModule,
-    DealsModule
   ],
   controllers: [LeadsController],
   providers: [

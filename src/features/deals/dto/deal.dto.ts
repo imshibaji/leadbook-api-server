@@ -65,10 +65,10 @@ export class DealDto {
 
     @IsNotEmpty()
     @ApiProperty({
-        type: String,
+        type: Date,
         required: true,
         description: 'Deal Created Date and Time',
-        default: Date.now()
+        default: ()=> 'CURRENT_TIMESTAMP'
     })
     createdAt: Date;
 

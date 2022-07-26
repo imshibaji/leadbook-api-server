@@ -40,10 +40,10 @@ export class FollowupDto {
 
     @IsNotEmpty()
     @ApiProperty({
-        type: String,
+        type: Date,
         required: true,
         description: 'Followup Schedule',
-        default: Date.now()
+        default: ()=> 'CURRENT_TIMESTAMP'
     })
     schedule: Date;
 

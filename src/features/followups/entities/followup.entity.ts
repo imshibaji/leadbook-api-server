@@ -15,7 +15,7 @@ export class Followup {
     @Column()
     status: string;
 
-    @Column()
+    @Column({default: () => 'CURRENT_TIMESTAMP', type: 'timestamp'})
     schedule: Date;
 
     @Column({default: null})
@@ -24,6 +24,6 @@ export class Followup {
     @Column()
     isDone: boolean;
 
-    @ManyToOne(()=> Lead, lead => lead.followups)
+    @ManyToOne(()=> Lead, lead => lead.followups, { cascade: true, onDelete: "CASCADE" })
     lead: Lead;
 }
