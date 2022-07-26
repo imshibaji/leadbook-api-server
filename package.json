@@ -8,7 +8,7 @@
   "bin": "dist/main.js",
   "pkg": {
     "scripts": "dist/**/*.js",
-    "assets": ["views/**/*", "public/**/*"]
+    "assets": ["views/**/*", "public/**/*", "**/**"]
   },
   "scripts": {
     "prebuild": "rimraf dist",
