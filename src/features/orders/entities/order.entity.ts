@@ -7,10 +7,13 @@ export class Order {
     id: number;
 
     @Column()
+    name: String;
+
+    @Column()
     details: String;
 
     @Column()
-    amount: number;
+    price: number;
 
     @Column({default:0})
     discount: number;

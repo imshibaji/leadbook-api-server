@@ -13,23 +13,46 @@ export class OrdersService {
   ){}
 
   create(orderDto: OrderDto) {
-    return 'This action adds a new order';
+    try {
+      const order = this.orderRepositoty.create(orderDto);
+      return this.orderRepositoty.save(order);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   findAll() {
-    return `This action returns all orders`;
+    try {
+      return this.orderRepositoty.find({
+        relations: ['deal']
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} order`;
+    try {
+      return this.orderRepositoty.findOne({where: {id}, relations:['deal']});
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   update(id: number, orderDto: OrderDto) {
-    return `This action updates a #${id} order`;
+    try {
+      return this.orderRepositoty.update(id, orderDto);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   remove(id: number) {
-    return `This action removes a #${id} order`;
+    try {
+      return this.orderRepositoty.delete(id);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   // Deal

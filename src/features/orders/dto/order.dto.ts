@@ -23,7 +23,7 @@ export class OrderDto {
         type: String,
         required: true,
         description: 'Order Name',
-        default: null
+        example: "Product / Service 1"
     })
     name: String;
 
@@ -32,7 +32,7 @@ export class OrderDto {
         type: String,
         required: true,
         description: 'Order Details',
-        default: null
+        example: "Product Details"
     })
     details: String;
     
@@ -41,7 +41,7 @@ export class OrderDto {
         type: Number,
         required: true,
         description: 'Order Price',
-        default: null
+        default: 0
     })
     price: number;
 
@@ -65,7 +65,7 @@ export class OrderDto {
         type: String,
         required: true,
         description: 'Order Unit',
-        default: 'pc'
+        example: '1 pc'
     })
     unit: String;
 

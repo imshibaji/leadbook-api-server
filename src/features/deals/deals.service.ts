@@ -23,7 +23,7 @@ export class DealsService {
   findAll() {
     try {
       return this.dealRepository.find({
-        relations: ['lead']
+        relations: ['lead', 'orders']
       });
     } catch (error) {
       console.log(error);
@@ -32,7 +32,7 @@ export class DealsService {
 
   findOne(id: number) {
     try {
-      return this.dealRepository.findOne({where: {id: id}, relations:['lead']});
+      return this.dealRepository.findOne({where: {id: id}, relations:['lead', 'orders']});
     } catch (error) {
       console.log(error);
     }
