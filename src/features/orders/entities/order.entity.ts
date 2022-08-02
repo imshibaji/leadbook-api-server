@@ -1,16 +1,19 @@
 import { Deal } from './../../deals/entities/deal.entity';
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity()
 export class Order {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
-    name: String;
+    @Column({default:null})
+    uid?: string;
 
     @Column()
-    details: String;
+    name: string;
+
+    @Column()
+    details: string;
 
     @Column()
     price: number;
@@ -22,10 +25,13 @@ export class Order {
     quantity: number;
 
     @Column({default:"unit"})
-    unit: String;
+    unit: string;
 
     @Column({default:0})
     total: number;
+
+    @Column({default:null})
+    dealUid?: string;
 
     @CreateDateColumn()
     createdAt: Date;

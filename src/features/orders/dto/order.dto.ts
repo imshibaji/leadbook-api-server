@@ -16,7 +16,7 @@ export class OrderDto {
         description: 'Order UID',
         default: null
     })
-    uid: String;
+    uid: string;
 
     @IsNotEmpty()
     @ApiProperty({
@@ -25,7 +25,7 @@ export class OrderDto {
         description: 'Order Name',
         example: "Product / Service 1"
     })
-    name: String;
+    name: string;
 
     @IsNotEmpty()
     @ApiProperty({
@@ -34,7 +34,7 @@ export class OrderDto {
         description: 'Order Details',
         example: "Product Details"
     })
-    details: String;
+    details: string;
     
     @IsNotEmpty()
     @ApiProperty({
@@ -67,7 +67,7 @@ export class OrderDto {
         description: 'Order Unit',
         example: '1 pc'
     })
-    unit: String;
+    unit: string;
 
     @ApiProperty({
         type: Number,
@@ -83,5 +83,5 @@ export class OrderDto {
         description: 'Deal UID',
         default: null
     })
-    deadUid: String;
+    dealUid: string;
 }
