@@ -3,7 +3,7 @@ import { UserDto } from './features/users/dto/user.dto';
 import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
 import { ApiBody, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AppService } from './app.service';
-import { LoginDto, ForgetDto } from './app.dto';
+import { LoginDto, ForgetDto, NewPasswordDto } from './app.dto';
 import { AuthService } from './auth/auth.service';
 import { FormDataRequest } from 'nestjs-form-data';
 
@@ -52,5 +52,19 @@ export class AppController {
       return { message: 'We send reset token please check Your Email' };
     }
     return { message: 'Your email not exist in our database' };
+  }
+
+  @Post('/set_new_password')
+  @FormDataRequest()
+  @ApiResponse({ description: 'Set New Password' })
+  @ApiBody({ type: NewPasswordDto })
+  async setNewPassword(@Body() newPassword: NewPasswordDto) {
+    if (newPassword.token) {
+      return {
+        message:
+          'Your new password setup successfully. You can login with new password',
+      };
+    }
+    return { message: 'Your token does not matched with our database' };
   }
 }
