@@ -49,5 +49,5 @@ export class NewPasswordDto {
     description: 'Set New Password',
     example: 'new password',
   })
-  email: string;
+  password: string;
 }
