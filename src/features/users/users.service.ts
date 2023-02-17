@@ -9,9 +9,9 @@ export class UsersService {
   constructor(
     @Inject('USER_REPOSITORY')
     private userRepository: Repository<User>,
-  ){}
+  ) {}
 
-  async create(createUserDto: UserDto){
+  async create(createUserDto: UserDto) {
     try {
       const user = this.userRepository.create(createUserDto);
       return await this.userRepository.save(user);
@@ -21,8 +21,8 @@ export class UsersService {
   }
 
   async findAll(): Promise<User[]> {
-    try{
-      return await this.userRepository.find({relations:['businesses']});
+    try {
+      return await this.userRepository.find({ relations: ['businesses'] });
     } catch (error) {
       return error;
     }
@@ -31,24 +31,23 @@ export class UsersService {
   async findOne(id: number): Promise<User> {
     try {
       return await this.userRepository.findOne({
-        where:{id: id},
-        relations:[ 'businesses']
+        where: { id: id },
+        relations: ['businesses'],
       });
     } catch (error) {
-       return error;
+      return error;
     }
   }
 
   async findByEmail(email: string): Promise<User> {
     try {
       return await this.userRepository.findOne({
-        where:{email: email},
-        relations:[ 'businesses']
+        where: { email: email },
+        relations: ['businesses'],
       });
     } catch (error) {
       return error;
     }
-    
   }
 
   async update(id: number, userDto: UserDto): Promise<UpdateResult> {
@@ -67,36 +66,54 @@ export class UsersService {
     }
   }
 
-  async addRelativeBusiness (user: User, business:Business) {
+  async addRelativeBusiness(user: User, business: Business) {
     try {
-      await this.userRepository.createQueryBuilder().relation(User, 'businesses').of(user).add(business);
-    } catch (error) {
-      return error;
-    }
-   
-  }
-  async switchRelativeBusiness (user: User, oldBusiness:Business, newBusiness:Business) {
-    try{
-      await this.userRepository.createQueryBuilder().relation(User, 'businesses').of(user).addAndRemove(newBusiness, oldBusiness);
-    }catch(error){
-      return error;
-    }
-  }
-  async removeRelativeBusiness (user: User, business:Business) {
-    try {
-      await this.userRepository.createQueryBuilder().relation(User, 'businesses').of(user).remove(business);
+      await this.userRepository
+        .createQueryBuilder()
+        .relation(User, 'businesses')
+        .of(user)
+        .add(business);
     } catch (error) {
       return error;
     }
   }
-  async removeRelativeUser(user: User, businesses: Business[]){
+  async switchRelativeBusiness(
+    user: User,
+    oldBusiness: Business,
+    newBusiness: Business,
+  ) {
     try {
-      businesses.forEach(async business =>{
-        await this.userRepository.createQueryBuilder().relation(User, 'businesses').of(user).remove(business);
+      await this.userRepository
+        .createQueryBuilder()
+        .relation(User, 'businesses')
+        .of(user)
+        .addAndRemove(newBusiness, oldBusiness);
+    } catch (error) {
+      return error;
+    }
+  }
+  async removeRelativeBusiness(user: User, business: Business) {
+    try {
+      await this.userRepository
+        .createQueryBuilder()
+        .relation(User, 'businesses')
+        .of(user)
+        .remove(business);
+    } catch (error) {
+      return error;
+    }
+  }
+  async removeRelativeUser(user: User, businesses: Business[]) {
+    try {
+      businesses.forEach(async (business) => {
+        await this.userRepository
+          .createQueryBuilder()
+          .relation(User, 'businesses')
+          .of(user)
+          .remove(business);
       });
     } catch (error) {
       return error;
     }
   }
-
 }

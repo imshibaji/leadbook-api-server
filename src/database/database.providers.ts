@@ -11,9 +11,7 @@ export const databaseProviders = [
         username: process.env.DATABASE_USER || 'root',
         password: process.env.DATABASE_PASS || 'password',
         database: process.env.DATABASE_NAME || 'apps',
-        entities: [
-            __dirname + '/../**/*.entity{.ts,.js}',
-        ],
+        entities: [__dirname + '/../**/*.entity{.ts,.js}'],
         synchronize: Boolean(process.env.DATABASE_SYNC) || true,
       });
 

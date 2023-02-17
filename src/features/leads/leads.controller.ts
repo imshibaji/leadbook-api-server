@@ -1,5 +1,14 @@
 import { BusinessService } from './../business/business.service';
-import { Controller, Get, Post, Body, Patch, Param, Delete, Put } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Put,
+} from '@nestjs/common';
 import { LeadsService } from './leads.service';
 import { LeadDto } from './dto/lead.dto';
 import { ApiTags } from '@nestjs/swagger';
@@ -8,8 +17,8 @@ import { ApiTags } from '@nestjs/swagger';
 @ApiTags('Leads')
 export class LeadsController {
   constructor(
-      private readonly leadsService: LeadsService,
-      private readonly businessService: BusinessService,
+    private readonly leadsService: LeadsService,
+    private readonly businessService: BusinessService,
   ) {}
 
   @Get()
@@ -38,25 +47,28 @@ export class LeadsController {
   }
 
   @Put('business-add/:lid/:bid')
-  async addBusiness(@Param('lid') lid: number, @Param('bid') bid: number){
+  async addBusiness(@Param('lid') lid: number, @Param('bid') bid: number) {
     const lead = await this.leadsService.findOne(lid);
     const business = await this.businessService.findOne(bid);
     const check = await this.leadsService.addRelativeBusiness(lead, business);
-    if(check == null){
-      return {message: 'Lead connected with Business'};
-    }else{
+    if (check == null) {
+      return { message: 'Lead connected with Business' };
+    } else {
       return check;
     }
   }
 
   @Delete('business-remove/:lid/:bid')
-  async removeBusiness(@Param('lid') lid: number, @Param('bid') bid: number){
+  async removeBusiness(@Param('lid') lid: number, @Param('bid') bid: number) {
     const lead = await this.leadsService.findOne(lid);
     const business = await this.businessService.findOne(bid);
-    const check = await this.leadsService.removeRelativeBusiness(lead, business);
-    if(check == null){
-      return {message: 'Lead disconnected with Business'};
-    }else{
+    const check = await this.leadsService.removeRelativeBusiness(
+      lead,
+      business,
+    );
+    if (check == null) {
+      return { message: 'Lead disconnected with Business' };
+    } else {
       return check;
     }
   }

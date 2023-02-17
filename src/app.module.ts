@@ -13,21 +13,28 @@ import { DealsModule } from './features/deals/deals.module';
 import { PaymentsModule } from './features/payments/payments.module';
 import { OrdersModule } from './features/orders/orders.module';
 import { ConfigModule } from '@nestjs/config';
+import { JsonApiModule } from 'json-api-nestjs';
+import { LeadsController } from './features/leads/leads.controller';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    DatabaseModule, 
-    UsersModule, 
-    BusinessModule, 
-    AuthModule, 
-    NestjsFormDataModule, 
-    LeadsModule, 
-    FollowupsModule, 
-    DealsModule, 
-    PaymentsModule, OrdersModule,
+    DatabaseModule,
+    UsersModule,
+    BusinessModule,
+    AuthModule,
+    NestjsFormDataModule,
+    LeadsModule,
+    FollowupsModule,
+    DealsModule,
+    PaymentsModule,
+    OrdersModule,
+    JsonApiModule.forRoot({
+      controllers: [LeadsController],
+      entities: [],
+    }),
   ],
   controllers: [AppController],
-  providers: [AppService,],
+  providers: [AppService],
 })
 export class AppModule {}

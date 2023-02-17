@@ -8,9 +8,7 @@ import helmet from 'helmet';
 
 async function bootstrap() {
   // const app = await NestFactory.create(AppModule);
-  const app = await NestFactory.create<NestExpressApplication>(
-    AppModule,
-  );
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
   app.useGlobalPipes(
     new ValidationPipe({
       transform: true,
@@ -33,13 +31,15 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, document);
 
   app.enableCors({
-    origin: "*"
+    origin: '*',
   });
-  app.use(helmet({
-    contentSecurityPolicy: false,
-  }));
-  await app.listen(process.env.PORT, process.env.HOST, ()=>{
-    console.log('Server: http://'+process.env.HOST+':'+process.env.PORT);
+  app.use(
+    helmet({
+      contentSecurityPolicy: false,
+    }),
+  );
+  await app.listen(process.env.PORT, process.env.HOST, () => {
+    console.log('Server: http://' + process.env.HOST + ':' + process.env.PORT);
   });
 }
 bootstrap();

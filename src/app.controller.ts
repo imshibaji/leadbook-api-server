@@ -1,6 +1,6 @@
 import { UsersService } from './features/users/users.service';
 import { UserDto } from './features/users/dto/user.dto';
-import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req } from '@nestjs/common';
 import { ApiBody, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AppService } from './app.service';
 import { LoginDto, ForgetDto, NewPasswordDto } from './app.dto';
@@ -15,6 +15,11 @@ export class AppController {
     private authService: AuthService,
     private userServide: UsersService,
   ) {}
+
+  @Get('/hello')
+  hello() {
+    return this.appService.getHello();
+  }
 
   // @UseGuards(AuthGuard('local'))
   @Post('/login')
